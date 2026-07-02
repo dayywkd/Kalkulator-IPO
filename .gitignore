@@ -1,0 +1,25 @@
+# Node dependencies
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Python dependencies
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.pytest_cache/
+
+# IDE and OS files
+.idea/
+.vscode/
+*.suo
+*.ntvsca*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
+Thumbs.db

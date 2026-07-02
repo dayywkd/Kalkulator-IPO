@@ -1,0 +1,62 @@
+[
+  {
+    "ticker": "JELI",
+    "name": "PT Niramas Utama Tbk (INACO)",
+    "price_range": "900",
+    "min_price": 900,
+    "max_price": 900,
+    "price": 900,
+    "phase": "Offering",
+    "listing_date": "2026-07-07"
+  },
+  {
+    "ticker": "JECX",
+    "name": "PT Nitrasanata Dharma Tbk",
+    "price_range": "1250",
+    "min_price": 1250,
+    "max_price": 1250,
+    "price": 1250,
+    "phase": "Offering",
+    "listing_date": "2026-07-07"
+  },
+  {
+    "ticker": "PRDL",
+    "name": "PT Prodia Diagnostic Line Tbk",
+    "price_range": "120",
+    "min_price": 120,
+    "max_price": 120,
+    "price": 120,
+    "phase": "Offering",
+    "listing_date": "2026-07-09"
+  },
+  {
+    "ticker": "BACH",
+    "name": "PT Bach Multi Global Tbk",
+    "price_range": "442",
+    "min_price": 442,
+    "max_price": 442,
+    "price": 442,
+    "phase": "Offering",
+    "listing_date": "2026-07-08"
+  },
+  {
+    "ticker": "EMMI",
+    "name": "PT Esa Medika Mandiri Tbk",
+    "price_range": "470",
+    "min_price": 470,
+    "max_price": 470,
+    "price": 470,
+    "phase": "Offering",
+    "listing_date": "2026-07-08"
+  },
+  {
+    "ticker": "RANS",
+    "name": "PT Rans Entertainment Indonesia Tbk",
+    "price_range": "170",
+    "min_price": 170,
+    "max_price": 170,
+    "price": 170,
+    "phase": "Offering",
+    "listing_date": "2026-07-10"
+  }
+]
