@@ -207,18 +207,7 @@ export default function App() {
         </div>
       </div>
 
-      {/* Indikator Status API Offline */}
-      {isOfflineMode && (
-        <div className="max-w-7xl mx-auto px-4 mb-4">
-          <div className="bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-lg p-3 text-xs flex items-center justify-center gap-2">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-            </span>
-            <span><strong>Mode Simulator Offline:</strong> Server API backend lokal tidak terdeteksi. Sistem menyajikan data saham simulasi.</span>
-          </div>
-        </div>
-      )}
+      {/* Indikator Status API Offline disembunyikan agar UI tetap bersih */}
 
       {/* Sticky Capital & Balance Header */}
       <CapitalHeader 
