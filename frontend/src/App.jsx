@@ -201,8 +201,7 @@ export default function App() {
                 : 'text-gray-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            <span className="inline sm:hidden">Simulasi ARA</span>
-            <span className="hidden sm:inline">Simulasi ARA 1 Minggu</span>
+            <span>Simulasi ARA</span>
           </button>
         </div>
       </div>

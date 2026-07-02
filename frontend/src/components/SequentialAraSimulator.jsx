@@ -14,6 +14,9 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
 
   // State emiten terpilih untuk simulasi detail
   const [selectedTicker, setSelectedTicker] = useState('');
+  
+  // State durasi simulasi (default 5 hari bursa / 1 minggu)
+  const [simulationDays, setSimulationDays] = useState(5);
 
   // Sinkronisasi ticker terpilih jika daftar activeOrders berubah
   useEffect(() => {
@@ -39,7 +42,7 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
           Belum Ada Pesanan Aktif
         </h3>
         <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
-          Silakan isi jumlah lot pesanan saham IPO Anda di tab **Kalkulator Harian** terlebih dahulu untuk melihat simulasi ARA 1 minggu ke depan.
+          Silakan isi jumlah lot pesanan saham IPO Anda di tab **Kalkulator Harian** terlebih dahulu untuk melihat simulasi ARA ke depan.
         </p>
         <button
           onClick={() => setActiveTab('daily')}
@@ -51,18 +54,19 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
     );
   }
 
-  // Perhitungan metrik akumulatif gabungan (Semua Saham)
+  // Perhitungan metrik akumulatif gabungan (Semua Saham) - dinamis sesuai simulationDays
   let totalInitialValue = 0;
   let totalFinalValue = 0;
+  const daysCount = parseInt(simulationDays, 10) || 5;
 
   activeOrders.forEach(ipo => {
     const lot = orderLots[ipo.ticker] || 0;
     const initPrice = selectedPrices[ipo.ticker] !== undefined ? selectedPrices[ipo.ticker] : ipo.price;
     const initialValue = initPrice * lot * 100;
     
-    // Simulasikan ARA 5 hari
+    // Simulasikan ARA N hari
     let currentPrice = initPrice;
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= daysCount; i++) {
       const limitPercentage = currentPrice <= 200 ? 0.35 : (currentPrice <= 5000 ? 0.25 : 0.20);
       const rawAra = currentPrice * (1 + limitPercentage);
       
@@ -91,15 +95,18 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
   const initPrice = selectedPrices[currentIpo.ticker] !== undefined ? selectedPrices[currentIpo.ticker] : currentIpo.price;
   const initialOrderValue = initPrice * lot * 100;
 
-  // Dapatkan 5 hari kerja bursa dari tanggal listing
-  const businessDays = getNextBusinessDays(currentIpo.listing_date || "2026-07-02", 5);
+  // Dapatkan N hari kerja bursa dari tanggal listing
+  const businessDays = getNextBusinessDays(currentIpo.listing_date || "2026-07-02", daysCount);
   // Hitung simulasi ARA berurutan
-  const simData = simulateSequentialAra(initPrice, 5);
+  const simData = simulateSequentialAra(initPrice, daysCount);
+  
+  // Data simulasi hari terakhir (fallback aman)
+  const lastDaySim = simData[simData.length - 1] || { araPrice: initPrice, cumulativePercentage: 0 };
 
   return (
     <div className="w-full flex flex-col gap-6 animate-fade-in">
       
-      {/* Ringkasan Portofolio Gabungan (Semua Saham ARA 1 Minggu) */}
+      {/* Ringkasan Portofolio Gabungan (Semua Saham) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gradient-to-r from-violet-950/20 via-indigo-950/20 to-emerald-950/20 border border-violet-500/20 rounded-2xl p-5 shadow-lg backdrop-blur-md">
         <div className="flex flex-col">
           <span className="text-[10px] font-bold text-violet-300/80 uppercase tracking-wider">Total Modal Pesanan (Gabungan)</span>
@@ -109,8 +116,8 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
         
         <div className="flex flex-col border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-5">
           <span className="text-[10px] font-bold text-emerald-400/80 uppercase tracking-wider flex items-center">
-            Total Estimasi Profit Gabungan (5x ARA)
-            <Tooltip content="Akumulasi keuntungan potensial dari seluruh pesanan saham aktif Anda jika masing-masing ARA berturut-turut selama 5 hari bursa." position="bottom" />
+            Total Estimasi Profit Gabungan ({daysCount}x ARA)
+            <Tooltip content={`Akumulasi keuntungan potensial dari seluruh pesanan saham aktif Anda jika masing-masing ARA berturut-turut selama ${daysCount} hari bursa.`} position="bottom" />
           </span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-xl md:text-2xl font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]">
@@ -120,13 +127,63 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
               +{totalEstProfitPercentage.toFixed(2)}%
             </span>
           </div>
-          <p className="text-[10px] text-gray-400 mt-1">Total keuntungan bersih jika semua saham yang dipesan ARA 5 hari bursa.</p>
+          <p className="text-[10px] text-gray-400 mt-1">Total keuntungan bersih jika semua saham yang dipesan ARA {daysCount} hari bursa.</p>
         </div>
 
         <div className="flex flex-col border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-5">
           <span className="text-[10px] font-bold text-gray-300/80 uppercase tracking-wider">Total Estimasi Nilai Akhir</span>
           <span className="text-xl md:text-2xl font-extrabold text-white mt-1">{formatRupiah(totalFinalValue)}</span>
           <p className="text-[10px] text-gray-400 mt-1">Total proyeksi nilai portofolio Anda setelah ARA berturut-turut.</p>
+        </div>
+      </div>
+
+      {/* Kontrol Pengaturan Durasi Simulasi (Dinamis) */}
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 glass-panel rounded-xl p-4 border border-white/5">
+        <div className="flex flex-col gap-1">
+          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider flex items-center">
+            Pilih Rentang Waktu Proyeksi ARA
+            <Tooltip content="Atur berapa lama durasi simulasi emiten mengalami ARA beruntun. Hari Sabtu & Minggu secara otomatis dilewati dari kalender bursa." position="bottom" />
+          </label>
+          <div className="flex flex-wrap gap-2 mt-1">
+            {[5, 10, 20].map(days => (
+              <button
+                key={days}
+                onClick={() => setSimulationDays(days)}
+                className={`py-1.5 px-3 rounded-lg text-xs font-bold transition-all active:scale-95 cursor-pointer ${
+                  daysCount === days
+                    ? 'bg-emerald-500 text-slate-950 font-extrabold shadow-md shadow-emerald-500/20'
+                    : 'bg-white/5 text-gray-300 hover:bg-white/10'
+                }`}
+              >
+                {days === 5 ? '1 Minggu (5 Hari)' : days === 10 ? '2 Minggu (10 Hari)' : '1 Bulan (20 Hari)'}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-2 self-stretch md:self-auto justify-between md:justify-start border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kustom Durasi:</span>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              min="1"
+              max="30"
+              value={simulationDays}
+              onChange={(e) => {
+                const val = e.target.value === '' ? '' : parseInt(e.target.value, 10);
+                if (val === '' || (val >= 1 && val <= 30)) {
+                  setSimulationDays(val);
+                }
+              }}
+              onBlur={() => {
+                const val = parseInt(simulationDays, 10);
+                if (isNaN(val) || val < 1) setSimulationDays(5);
+                else if (val > 30) setSimulationDays(30);
+              }}
+              className="w-16 bg-white/5 border border-white/10 rounded-lg py-1.5 px-2 text-center text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-transparent"
+            />
+            <span className="text-xs text-gray-400 font-semibold">Hari Bursa</span>
+          </div>
         </div>
       </div>
 
@@ -164,12 +221,12 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
           <div className="border-l border-white/10 pl-1 h-8 hidden sm:block" />
 
           <div>
-            <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Estimasi Profit (5x ARA)</span>
+            <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Estimasi Profit ({daysCount}x ARA)</span>
             <span className="text-xl font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]">
-              +{formatRupiah(simData[4].araPrice * lot * 100 - initialOrderValue)}
+              +{formatRupiah(lastDaySim.araPrice * lot * 100 - initialOrderValue)}
             </span>
             <span className="block text-[10px] text-emerald-500 font-bold">
-              +{simData[4].cumulativePercentage.toFixed(2)}%
+              +{lastDaySim.cumulativePercentage.toFixed(2)}%
             </span>
           </div>
         </div>
@@ -177,11 +234,11 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* Tabel Proyeksi ARA 1 Minggu */}
+        {/* Tabel Proyeksi ARA Harian */}
         <div className="lg:col-span-2 flex flex-col gap-4">
-          <div className="glass-panel rounded-xl p-5 border border-white/5 overflow-x-auto">
+          <div className="glass-panel rounded-xl p-5 border border-white/5 overflow-x-auto max-h-[500px] overflow-y-auto">
             <h3 className="text-base font-bold text-white tracking-wide mb-4">
-              Tabel Proyeksi ARA Berurutan (5 Hari Bursa)
+              Tabel Proyeksi ARA Berurutan ({daysCount} Hari Bursa)
             </h3>
             
             <table className="w-full text-left text-sm border-collapse min-w-[500px]">
@@ -235,7 +292,7 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
 
         {/* Visualisasi Timeline Pertumbuhan Portofolio */}
         <div className="flex flex-col gap-4">
-          <div className="glass-panel rounded-xl p-5 border border-white/5 h-full flex flex-col justify-between">
+          <div className="glass-panel rounded-xl p-5 border border-white/5 flex flex-col justify-between max-h-[500px] overflow-y-auto">
             <div>
               <h3 className="text-base font-bold text-white tracking-wide mb-4">
                 Pertumbuhan Portofolio
@@ -277,15 +334,15 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
             </div>
 
             {/* Total Return Card */}
-            <div className="mt-6 pt-4 border-t border-white/10 bg-emerald-500/5 rounded-lg p-3 border border-emerald-500/10">
+            <div className="mt-6 pt-4 border-t border-white/10 bg-emerald-500/5 rounded-lg p-3 border border-emerald-500/10 flex-shrink-0">
               <span className="block text-[10px] text-emerald-400/80 font-bold uppercase tracking-wider">
-                Estimasi Total Return 1 Minggu (5x ARA)
+                Estimasi Total Return ({daysCount}x ARA)
               </span>
               <span className="block text-2xl font-extrabold text-emerald-400 mt-1">
-                +{formatRupiah(simData[4].araPrice * lot * 100 - initialOrderValue)}
+                +{formatRupiah(lastDaySim.araPrice * lot * 100 - initialOrderValue)}
               </span>
               <span className="text-xs text-gray-400">
-                Nilai akhir: <strong className="text-white">{formatRupiah(simData[4].araPrice * lot * 100)}</strong>
+                Nilai akhir: <strong className="text-white">{formatRupiah(lastDaySim.araPrice * lot * 100)}</strong>
               </span>
             </div>
             
