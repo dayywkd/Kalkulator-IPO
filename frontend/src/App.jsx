@@ -69,7 +69,7 @@ export default function App() {
   // State 1: Modal Awal (Capital)
   const [capital, setCapital] = useState(() => {
     const saved = localStorage.getItem("ipo_capital");
-    return saved ? parseInt(saved, 10) : 10000000; // default Rp 10 Juta
+    return saved ? parseInt(saved, 10) : 0; // default Rp 0
   });
 
   // State 2: Inputan Lot per Saham (Object key: ticker, value: lot)
@@ -161,6 +161,7 @@ export default function App() {
   const [showResetModal, setShowResetModal] = useState(false);
 
   const confirmReset = () => {
+    setCapital(0);
     setOrderLots({});
     setSelectedPrices({});
     setShowResetModal(false);
