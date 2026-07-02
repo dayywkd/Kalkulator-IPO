@@ -184,18 +184,17 @@ export default function App() {
         <div className="flex bg-white/5 border border-white/10 rounded-xl p-1 shadow-inner backdrop-blur-sm">
           <button
             onClick={() => setActiveTab('daily')}
-            className={`py-2 px-4 sm:px-6 rounded-lg text-[11px] sm:text-xs md:text-sm font-bold tracking-wide transition-all cursor-pointer active:scale-95 whitespace-nowrap ${
+            className={`py-2.5 px-5 sm:px-8 rounded-lg text-xs md:text-sm font-bold tracking-wide transition-all cursor-pointer active:scale-95 whitespace-nowrap ${
               activeTab === 'daily'
                 ? 'bg-violet-600 text-white shadow-md shadow-violet-900/30'
                 : 'text-gray-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            <span className="inline sm:hidden">Kalkulator Harian</span>
-            <span className="hidden sm:inline">Kalkulator Harian (Hari ke-1)</span>
+            <span>Kalkulator Harian</span>
           </button>
           <button
             onClick={() => setActiveTab('sequential')}
-            className={`py-2 px-4 sm:px-6 rounded-lg text-[11px] sm:text-xs md:text-sm font-bold tracking-wide transition-all cursor-pointer active:scale-95 whitespace-nowrap ${
+            className={`py-2.5 px-5 sm:px-8 rounded-lg text-xs md:text-sm font-bold tracking-wide transition-all cursor-pointer active:scale-95 whitespace-nowrap ${
               activeTab === 'sequential'
                 ? 'bg-violet-600 text-white shadow-md shadow-violet-900/30'
                 : 'text-gray-400 hover:text-white hover:bg-white/5'
