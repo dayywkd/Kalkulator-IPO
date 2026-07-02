@@ -32,7 +32,7 @@ During IPO bookbuilding periods, retail investors often chase more than one stoc
 
 ## 📸 Preview
 
-*(add screenshot or demo GIF here)*
+<img width="2856" height="1542" alt="image" src="https://github.com/user-attachments/assets/27824aaf-1412-49ba-a684-bd1202437e31" />
 
 ## ⚙️ Running Locally
 
