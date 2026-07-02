@@ -32,7 +32,8 @@ Saat periode *bookbuilding* IPO, investor retail sering memburu lebih dari satu 
 
 ## 📸 Preview
 
-*(tambahkan screenshot atau GIF demo di sini)*
+<img width="2856" height="1542" alt="image" src="https://github.com/user-attachments/assets/f981c329-29fb-49aa-a34a-e717064f2bfa" />
+
 
 ## ⚙️ Menjalankan Secara Lokal
 
