@@ -32,21 +32,21 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
   // Jika tidak ada pesanan aktif
   if (activeOrders.length === 0) {
     return (
-      <div className="glass-panel rounded-2xl p-8 md:p-12 text-center max-w-2xl mx-auto border border-white/5 shadow-xl animate-fade-in flex flex-col items-center justify-center gap-4">
-        <div className="w-16 h-16 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-          <svg className="w-8 h-8 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="glass-panel rounded-2xl p-8 md:p-12 text-center max-w-2xl mx-auto border border-[#2A2A2A] shadow-xl animate-fade-in flex flex-col items-center justify-center gap-4">
+        <div className="w-16 h-16 rounded-full bg-[#B8860B]/10 border border-[#B8860B]/20 flex items-center justify-center">
+          <svg className="w-8 h-8 text-[#B8860B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
         </div>
-        <h3 className="text-xl font-bold text-white tracking-wide">
+        <h3 className="text-xl font-bold text-[#EDEDED] tracking-wide">
           Belum Ada Pesanan Aktif
         </h3>
-        <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
+        <p className="text-sm text-[#8A8A8F] max-w-sm leading-relaxed">
           Silakan isi jumlah lot pesanan saham IPO Anda di tab **Kalkulator Harian** terlebih dahulu untuk melihat simulasi ARA ke depan.
         </p>
         <button
           onClick={() => setActiveTab('daily')}
-          className="mt-2 py-2.5 px-6 rounded-xl bg-violet-600 hover:bg-violet-500 text-sm font-semibold text-white shadow-lg shadow-violet-900/20 active:scale-95 transition-all cursor-pointer"
+          className="mt-2 py-2.5 px-6 rounded-xl bg-[#B8860B] hover:bg-[#B8860B]/90 text-sm font-bold text-slate-950 active:scale-95 transition-all cursor-pointer"
         >
           Buka Kalkulator Harian
         </button>
@@ -106,41 +106,41 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
   return (
     <div className="w-full flex flex-col gap-6 animate-fade-in">
       
-      {/* Ringkasan Portofolio Gabungan (Semua Saham) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gradient-to-r from-violet-950/20 via-indigo-950/20 to-emerald-950/20 border border-violet-500/20 rounded-2xl p-5 shadow-lg backdrop-blur-md">
+      {/* Ringkasan Portofolio Gabungan (Semua Saham) - Signature Element (Accent Vertikal Emas) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[#1A1A1A] border-l-2 border-l-[#B8860B] border-[#2A2A2A] rounded-2xl p-5 shadow-lg">
         <div className="flex flex-col">
-          <span className="text-[10px] font-bold text-violet-300/80 uppercase tracking-wider">Total Modal Pesanan (Gabungan)</span>
-          <span className="text-xl md:text-2xl font-extrabold text-white mt-1">{formatRupiah(totalInitialValue)}</span>
-          <p className="text-[10px] text-gray-400 mt-1">Total akumulasi dana pesanan untuk seluruh saham aktif.</p>
+          <span className="text-[10px] font-bold text-[#8A8A8F] uppercase tracking-wider">Total Modal Pesanan (Gabungan)</span>
+          <span className="text-xl md:text-2xl font-bold font-mono text-[#EDEDED] mt-1">{formatRupiah(totalInitialValue)}</span>
+          <p className="text-[10px] text-[#8A8A8F] mt-1 font-sans">Total akumulasi dana pesanan untuk seluruh saham aktif.</p>
         </div>
         
-        <div className="flex flex-col border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-5">
-          <span className="text-[10px] font-bold text-emerald-400/80 uppercase tracking-wider flex items-center">
+        <div className="flex flex-col border-t md:border-t-0 md:border-l border-[#2A2A2A] pt-4 md:pt-0 md:pl-5">
+          <span className="text-[10px] font-bold text-[#22C55E]/85 uppercase tracking-wider flex items-center">
             Total Estimasi Profit Gabungan ({daysCount}x ARA)
             <Tooltip content={`Akumulasi keuntungan potensial dari seluruh pesanan saham aktif Anda jika masing-masing ARA berturut-turut selama ${daysCount} hari bursa.`} position="bottom" />
           </span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-xl md:text-2xl font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+            <span className="text-xl md:text-2xl font-bold font-mono text-[#22C55E]">
               +{formatRupiah(totalEstProfit)}
             </span>
-            <span className="text-xs font-bold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">
+            <span className="text-xs font-bold font-mono bg-[#22C55E]/10 text-[#22C55E] px-2 py-0.5 rounded">
               +{totalEstProfitPercentage.toFixed(2)}%
             </span>
           </div>
-          <p className="text-[10px] text-gray-400 mt-1">Total keuntungan bersih jika semua saham yang dipesan ARA {daysCount} hari bursa.</p>
+          <p className="text-[10px] text-[#8A8A8F] mt-1">Total keuntungan bersih jika semua saham yang dipesan ARA {daysCount} hari bursa.</p>
         </div>
 
-        <div className="flex flex-col border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-5">
-          <span className="text-[10px] font-bold text-gray-300/80 uppercase tracking-wider">Total Estimasi Nilai Akhir</span>
-          <span className="text-xl md:text-2xl font-extrabold text-white mt-1">{formatRupiah(totalFinalValue)}</span>
-          <p className="text-[10px] text-gray-400 mt-1">Total proyeksi nilai portofolio Anda setelah ARA berturut-turut.</p>
+        <div className="flex flex-col border-t md:border-t-0 md:border-l border-[#2A2A2A] pt-4 md:pt-0 md:pl-5">
+          <span className="text-[10px] font-bold text-[#EDEDED]/85 uppercase tracking-wider">Total Estimasi Nilai Akhir</span>
+          <span className="text-xl md:text-2xl font-bold font-mono text-[#EDEDED] mt-1">{formatRupiah(totalFinalValue)}</span>
+          <p className="text-[10px] text-[#8A8A8F] mt-1 font-sans">Total proyeksi nilai portofolio Anda setelah ARA berturut-turut.</p>
         </div>
       </div>
 
       {/* Kontrol Pengaturan Durasi Simulasi (Dinamis) */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 glass-panel rounded-xl p-4 border border-white/5">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 glass-panel rounded-xl p-4 border border-[#2A2A2A]">
         <div className="flex flex-col gap-1">
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider flex items-center">
+          <label className="block text-xs font-semibold text-[#8A8A8F] uppercase tracking-wider flex items-center">
             Pilih Rentang Waktu Proyeksi ARA
             <Tooltip content="Atur berapa lama durasi simulasi emiten mengalami ARA beruntun. Hari Sabtu & Minggu secara otomatis dilewati dari kalender bursa." position="bottom" />
           </label>
@@ -151,8 +151,8 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
                 onClick={() => setSimulationDays(days)}
                 className={`py-1.5 px-3 rounded-lg text-xs font-bold transition-all active:scale-95 cursor-pointer ${
                   daysCount === days
-                    ? 'bg-emerald-500 text-slate-950 font-extrabold shadow-md shadow-emerald-500/20'
-                    : 'bg-white/5 text-gray-300 hover:bg-white/10'
+                    ? 'bg-[#B8860B] text-slate-950 font-extrabold shadow-md shadow-amber-950/20'
+                    : 'bg-white/5 text-[#8A8A8F] hover:text-[#EDEDED] hover:bg-white/10'
                 }`}
               >
                 {days === 5 ? '1 Minggu (5 Hari)' : days === 10 ? '2 Minggu (10 Hari)' : '1 Bulan (20 Hari)'}
@@ -161,8 +161,8 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
           </div>
         </div>
         
-        <div className="flex items-center gap-2 self-stretch md:self-auto justify-between md:justify-start border-t md:border-t-0 border-white/5 pt-3 md:pt-0">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kustom Durasi:</span>
+        <div className="flex items-center gap-2 self-stretch md:self-auto justify-between md:justify-start border-t md:border-t-0 border-[#2A2A2A] pt-3 md:pt-0">
+          <span className="text-xs font-semibold text-[#8A8A8F] uppercase tracking-wider">Kustom Durasi:</span>
           <div className="flex items-center gap-2">
             <input
               type="number"
@@ -180,17 +180,17 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
                 if (isNaN(val) || val < 1) setSimulationDays(5);
                 else if (val > 30) setSimulationDays(30);
               }}
-              className="w-16 bg-white/5 border border-white/10 rounded-lg py-1.5 px-2 text-center text-xs text-white font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-transparent"
+              className="w-16 bg-[#0D0D0D]/50 border border-[#2A2A2A] rounded-lg py-1.5 px-2 text-center text-xs text-[#EDEDED] font-bold font-mono focus:outline-none focus:ring-1 focus:ring-[#B8860B] focus:border-transparent"
             />
-            <span className="text-xs text-gray-400 font-semibold">Hari Bursa</span>
+            <span className="text-xs text-[#8A8A8F] font-semibold">Hari Bursa</span>
           </div>
         </div>
       </div>
 
       {/* Selector Saham Aktif */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 glass-panel rounded-xl p-4 border border-white/5">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 glass-panel rounded-xl p-4 border border-[#2A2A2A]">
         <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1 flex items-center">
+          <label className="block text-xs font-semibold text-[#8A8A8F] uppercase tracking-wider mb-1 flex items-center">
             Pilih Saham IPO untuk Simulasi ARA
             <Tooltip content="Pilih salah satu saham untuk melihat proyeksi detail kenaikan harga dan nilai portofolio hari demi hari." position="bottom" />
           </label>
@@ -201,8 +201,8 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
                 onClick={() => setSelectedTicker(ipo.ticker)}
                 className={`py-2 px-4 rounded-xl text-sm font-bold active:scale-95 transition-all cursor-pointer ${
                   selectedTicker === ipo.ticker
-                    ? 'bg-violet-600 text-white shadow-md shadow-violet-900/30'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    ? 'bg-[#B8860B] text-slate-950 shadow-md shadow-amber-950/20'
+                    : 'bg-white/5 text-[#8A8A8F] hover:bg-white/10'
                 }`}
               >
                 {ipo.ticker} ({orderLots[ipo.ticker]} Lot)
@@ -213,19 +213,19 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
         
         <div className="flex flex-wrap items-center gap-6 text-left sm:text-right sm:justify-end">
           <div>
-            <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Nilai Pesanan Awal</span>
-            <span className="text-xl font-extrabold text-white">{formatRupiah(initialOrderValue)}</span>
-            <span className="block text-[10px] text-gray-500">Harga Perdana: {formatRupiah(initPrice)}</span>
+            <span className="block text-xs font-semibold text-[#8A8A8F] uppercase tracking-wider font-sans">Nilai Pesanan Awal</span>
+            <span className="text-xl font-bold font-mono text-[#EDEDED]">{formatRupiah(initialOrderValue)}</span>
+            <span className="block text-[10px] text-[#8A8A8F] font-mono">Harga Perdana: {formatRupiah(initPrice)}</span>
           </div>
           
-          <div className="border-l border-white/10 pl-1 h-8 hidden sm:block" />
+          <div className="border-l border-[#2A2A2A] pl-1 h-8 hidden sm:block" />
 
           <div>
-            <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Estimasi Profit ({daysCount}x ARA)</span>
-            <span className="text-xl font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]">
+            <span className="block text-xs font-semibold text-[#8A8A8F] uppercase tracking-wider font-sans">Estimasi Profit ({daysCount}x ARA)</span>
+            <span className="text-xl font-bold font-mono text-[#22C55E]">
               +{formatRupiah(lastDaySim.araPrice * lot * 100 - initialOrderValue)}
             </span>
-            <span className="block text-[10px] text-emerald-500 font-bold">
+            <span className="block text-[10px] text-[#22C55E] font-bold font-mono">
               +{lastDaySim.cumulativePercentage.toFixed(2)}%
             </span>
           </div>
@@ -236,23 +236,23 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
         
         {/* Tabel Proyeksi ARA Harian */}
         <div className="lg:col-span-2 flex flex-col gap-4">
-          <div className="glass-panel rounded-xl p-5 border border-white/5 overflow-x-auto max-h-[500px] overflow-y-auto">
-            <h3 className="text-base font-bold text-white tracking-wide mb-4">
+          <div className="glass-panel rounded-xl p-5 border border-[#2A2A2A] overflow-x-auto max-h-[500px] overflow-y-auto">
+            <h3 className="text-base font-bold text-[#EDEDED] tracking-wide mb-4">
               Tabel Proyeksi ARA Berurutan ({daysCount} Hari Bursa)
             </h3>
             
             <table className="w-full text-left text-sm border-collapse min-w-[500px]">
               <thead>
-                <tr className="border-b border-white/10 text-gray-400 font-semibold uppercase tracking-wider text-xs">
+                <tr className="border-b border-[#2A2A2A] text-[#8A8A8F] font-semibold uppercase tracking-wider text-xs">
                   <th className="pb-3 pr-2">Hari</th>
                   <th className="pb-3 pr-4">Tanggal Bursa</th>
                   <th className="pb-3 text-center">Batas ARA</th>
                   <th className="pb-3 text-right">Harga Saham (Rp)</th>
                   <th className="pb-3 text-right">Nilai Portofolio</th>
-                  <th className="pb-3 text-right text-emerald-400">Total Profit (PnL)</th>
+                  <th className="pb-3 text-right text-[#22C55E]">Total Profit (PnL)</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 font-medium">
+              <tbody className="divide-y divide-[#2A2A2A] font-medium">
                 {simData.map((daySim, index) => {
                   const date = businessDays[index];
                   const formattedDate = date ? formatDateIndonesia(date) : '-';
@@ -260,25 +260,25 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
                   const profitNominal = currentPortfolioValue - initialOrderValue;
 
                   return (
-                    <tr key={daySim.day} className="hover:bg-white/5 transition-colors">
-                      <td className="py-3.5 pr-2 font-bold text-violet-400">
+                    <tr key={daySim.day} className="hover:bg-white/[0.015] transition-colors">
+                      <td className="py-3.5 pr-2 font-bold text-[#B8860B]">
                         Hari {daySim.day}
                       </td>
-                      <td className="py-3.5 pr-4 text-xs text-gray-300 font-normal">
+                      <td className="py-3.5 pr-4 text-xs text-[#8A8A8F] font-mono font-normal">
                         {formattedDate}
                       </td>
-                      <td className="py-3.5 text-center text-xs text-emerald-500 font-bold">
+                      <td className="py-3.5 text-center text-xs text-[#22C55E] font-bold font-mono">
                         +{daySim.dailyPercentage.toFixed(2)}%
                       </td>
-                      <td className="py-3.5 text-right font-bold text-white">
+                      <td className="py-3.5 text-right font-bold font-mono text-[#EDEDED]">
                         {formatRupiah(daySim.araPrice)}
                       </td>
-                      <td className="py-3.5 text-right font-semibold text-white">
+                      <td className="py-3.5 text-right font-semibold font-mono text-[#EDEDED]">
                         {formatRupiah(currentPortfolioValue)}
                       </td>
-                      <td className="py-3.5 text-right text-emerald-400">
-                        <div className="font-bold">+{formatRupiah(profitNominal)}</div>
-                        <div className="text-[10px] font-semibold text-emerald-500/80">
+                      <td className="py-3.5 text-right text-[#22C55E]">
+                        <div className="font-bold font-mono">+{formatRupiah(profitNominal)}</div>
+                        <div className="text-[10px] font-bold font-mono text-[#22C55E]/80">
                           +{daySim.cumulativePercentage.toFixed(2)}%
                         </div>
                       </td>
@@ -292,19 +292,19 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
 
         {/* Visualisasi Timeline Pertumbuhan Portofolio */}
         <div className="flex flex-col gap-4">
-          <div className="glass-panel rounded-xl p-5 border border-white/5 flex flex-col justify-between max-h-[500px] overflow-y-auto">
+          <div className="glass-panel rounded-xl p-5 border border-[#2A2A2A] flex flex-col justify-between max-h-[500px] overflow-y-auto">
             <div>
-              <h3 className="text-base font-bold text-white tracking-wide mb-4">
+              <h3 className="text-base font-bold text-[#EDEDED] tracking-wide mb-4">
                 Pertumbuhan Portofolio
               </h3>
               
               {/* Linimasa Progresif Visual */}
-              <div className="flex flex-col gap-4 pl-2 relative border-l border-white/10 ml-2">
+              <div className="flex flex-col gap-4 pl-2 relative border-l border-[#2A2A2A] ml-2">
                 {/* Modal Awal */}
                 <div className="relative pl-6">
-                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-violet-500 ring-4 ring-violet-500/20" />
-                  <span className="block text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Harga IPO Awal</span>
-                  <span className="text-sm font-semibold text-gray-300">{formatRupiah(initialOrderValue)}</span>
+                  <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#B8860B] ring-4 ring-[#B8860B]/10" />
+                  <span className="block text-[10px] text-[#8A8A8F] uppercase tracking-wider font-semibold">Harga IPO Awal</span>
+                  <span className="text-sm font-bold font-mono text-[#EDEDED]">{formatRupiah(initialOrderValue)}</span>
                 </div>
 
                 {simData.map((daySim, index) => {
@@ -315,16 +315,16 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
                     <div key={daySim.day} className="relative pl-6">
                       <div className={`absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full ring-4 transition-all ${
                         isLast 
-                          ? 'bg-emerald-400 ring-emerald-400/30 w-3.5 h-3.5 left-[-7px] animate-pulse' 
-                          : 'bg-emerald-500/60 ring-emerald-500/10'
+                          ? 'bg-[#22C55E] ring-[#22C55E]/20 w-3.5 h-3.5 left-[-7px] animate-pulse' 
+                          : 'bg-[#22C55E]/40 ring-[#22C55E]/5'
                       }`} />
-                      <span className="block text-[10px] text-gray-400 font-semibold">
+                      <span className="block text-[10px] text-[#8A8A8F] font-semibold">
                         Hari {daySim.day} ({daySim.dailyPercentage.toFixed(0)}% ARA)
                       </span>
-                      <span className={`text-sm font-bold ${isLast ? 'text-emerald-400 text-base' : 'text-white'}`}>
+                      <span className={`text-sm font-bold font-mono ${isLast ? 'text-[#22C55E] text-base' : 'text-[#EDEDED]'}`}>
                         {formatRupiah(currentPortfolioValue)}
                       </span>
-                      <span className="inline-block text-[9px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.2 rounded font-bold ml-2">
+                      <span className="inline-block text-[9px] bg-[#22C55E]/10 text-[#22C55E] px-1.5 py-0.2 rounded font-bold ml-2 font-mono">
                         +{daySim.cumulativePercentage.toFixed(0)}%
                       </span>
                     </div>
@@ -334,15 +334,15 @@ export default function SequentialAraSimulator({ ipoList, orderLots, selectedPri
             </div>
 
             {/* Total Return Card */}
-            <div className="mt-6 pt-4 border-t border-white/10 bg-emerald-500/5 rounded-lg p-3 border border-emerald-500/10 flex-shrink-0">
-              <span className="block text-[10px] text-emerald-400/80 font-bold uppercase tracking-wider">
+            <div className="mt-6 pt-4 border-t border-[#2A2A2A] bg-[#22C55E]/5 rounded-lg p-3 border border-[#22C55E]/10 flex-shrink-0">
+              <span className="block text-[10px] text-[#22C55E]/85 font-bold uppercase tracking-wider">
                 Estimasi Total Return ({daysCount}x ARA)
               </span>
-              <span className="block text-2xl font-extrabold text-emerald-400 mt-1">
+              <span className="block text-xl font-bold font-mono text-[#22C55E] mt-1">
                 +{formatRupiah(lastDaySim.araPrice * lot * 100 - initialOrderValue)}
               </span>
-              <span className="text-xs text-gray-400">
-                Nilai akhir: <strong className="text-white">{formatRupiah(lastDaySim.araPrice * lot * 100)}</strong>
+              <span className="text-xs text-[#8A8A8F]">
+                Nilai akhir: <strong className="text-[#EDEDED] font-mono font-semibold">{formatRupiah(lastDaySim.araPrice * lot * 100)}</strong>
               </span>
             </div>
             

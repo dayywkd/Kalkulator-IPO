@@ -24,19 +24,19 @@ export default function IPOTable({ ipoList, orderLots, setOrderLots, selectedPri
     <div className="hidden md:block w-full overflow-x-auto rounded-xl glass-panel p-1">
       <table className="w-full border-collapse text-left text-sm">
         <thead>
-          <tr className="border-b border-white/10 text-gray-400 font-semibold uppercase tracking-wider text-xs">
+          <tr className="border-b border-[#2A2A2A] text-[#8A8A8F] font-semibold uppercase tracking-wider text-xs">
             <th className="py-4 px-5">Saham (Ticker)</th>
             <th className="py-4 px-4 text-center">Fase</th>
             <th className="py-4 px-4">Harga Acuan (Rp)</th>
-            <th className="py-4 px-4 w-32">Jumlah Lot</th>
+            <th className="py-4 px-4 w-32 text-center">Jumlah Lot</th>
             <th className="py-4 px-4">Total Pesanan</th>
-            <th className="py-4 px-4 bg-emerald-500/5 text-emerald-400 border-l border-white/5">
+            <th className="py-4 px-4 border-l border-[#2A2A2A]">
               <span className="flex items-center">
                 Estimasi ARA (Batas Atas)
                 <Tooltip content="Auto Rejection Atas: Batas kenaikan harga saham maksimal dalam satu hari perdagangan bursa." position="bottom" align="right" />
               </span>
             </th>
-            <th className="py-4 px-4 bg-rose-500/5 text-rose-400 border-l border-white/5">
+            <th className="py-4 px-4 border-l border-[#2A2A2A]">
               <span className="flex items-center">
                 Estimasi ARB (Batas Bawah)
                 <Tooltip content="Auto Rejection Bawah: Batas penurunan harga saham maksimal dalam satu hari perdagangan bursa (minimal Rp50)." position="bottom" align="right" />
@@ -44,7 +44,7 @@ export default function IPOTable({ ipoList, orderLots, setOrderLots, selectedPri
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-white/5 font-medium">
+        <tbody className="divide-y divide-[#2A2A2A] font-medium">
           {ipoList.map((ipo) => {
             const lot = orderLots[ipo.ticker] || 0;
             
@@ -65,23 +65,23 @@ export default function IPOTable({ ipoList, orderLots, setOrderLots, selectedPri
             const arbPnL = arbPortfolio - totalOrder;
 
             return (
-              <tr key={ipo.ticker} className="hover:bg-white/5 transition-colors group">
+              <tr key={ipo.ticker} className="hover:bg-white/[0.015] transition-colors group">
                 {/* Ticker & Nama */}
                 <td className="py-4 px-5">
-                  <div className="font-bold text-white text-base group-hover:text-violet-400 transition-colors">
+                  <div className="font-bold text-[#EDEDED] text-base group-hover:text-[#B8860B] transition-colors">
                     {ipo.ticker}
                   </div>
-                  <div className="text-xs text-gray-400 font-normal max-w-xs truncate">
+                  <div className="text-xs text-[#8A8A8F] font-normal max-w-xs truncate">
                     {ipo.name}
                   </div>
                 </td>
                 
                 {/* Fase */}
                 <td className="py-4 px-4 text-center">
-                  <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${
+                  <span className={`inline-block px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider border ${
                     ipo.phase.toLowerCase() === 'offering'
-                      ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                      : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                      ? 'bg-[#B8860B]/10 text-[#B8860B] border-[#B8860B]/20'
+                      : 'bg-[#8A8A8F]/10 text-[#8A8A8F] border-[#8A8A8F]/20'
                   }`}>
                     {ipo.phase}
                   </span>
@@ -90,27 +90,26 @@ export default function IPOTable({ ipoList, orderLots, setOrderLots, selectedPri
                 {/* Harga Acuan */}
                 <td className="py-4 px-4">
                   {ipo.phase.toLowerCase() === 'bookbuilding' && ipo.min_price !== ipo.max_price ? (
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs text-gray-400 font-normal">Range: {ipo.price_range}</span>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[10px] text-[#8A8A8F] font-normal font-mono">Range: {ipo.price_range}</span>
                       <select
-                        className="bg-white/5 border border-white/10 rounded px-2 py-1 text-white text-sm focus:outline-none focus:ring-1 focus:ring-violet-500"
+                        className="bg-[#0D0D0D]/50 border border-[#2A2A2A] rounded px-2 py-1 text-[#EDEDED] text-xs font-mono focus:outline-none focus:ring-1 focus:ring-[#B8860B]"
                         value={currentPrice}
                         onChange={(e) => handlePriceChange(ipo.ticker, parseInt(e.target.value, 10))}
                       >
-                        {/* Buat pilihan dari min_price ke max_price dengan kelipatan fraksi */}
                         {Array.from(
-                          { length: Math.floor((ipo.max_price - ipo.min_price) / 5) + 1 }, // default step Rp5 untuk penawaran
+                          { length: Math.floor((ipo.max_price - ipo.min_price) / 5) + 1 }, 
                           (_, i) => ipo.min_price + i * 5
                         ).filter(p => p <= ipo.max_price).concat(ipo.max_price).filter((v, i, self) => self.indexOf(v) === i)
                         .map((priceOption) => (
-                          <option key={priceOption} value={priceOption} className="bg-slate-900 text-white">
+                          <option key={priceOption} value={priceOption} className="bg-[#1A1A1A] text-[#EDEDED]">
                             Rp {new Intl.NumberFormat("id-ID").format(priceOption)}
                           </option>
                         ))}
                       </select>
                     </div>
                   ) : (
-                    <div className="text-white text-base">
+                    <div className="text-[#EDEDED] text-sm font-mono">
                       {formatRupiah(currentPrice)}
                     </div>
                   )}
@@ -120,7 +119,7 @@ export default function IPOTable({ ipoList, orderLots, setOrderLots, selectedPri
                 <td className="py-4 px-4">
                   <input
                     type="text"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-1.5 px-3 text-white text-center font-bold focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                    className="w-20 mx-auto block bg-[#0D0D0D]/50 border border-[#2A2A2A] rounded-lg py-1 px-2.5 text-[#EDEDED] text-center font-bold font-mono text-sm focus:outline-none focus:ring-1 focus:ring-[#B8860B] focus:border-transparent transition-all"
                     placeholder="0"
                     value={lot > 0 ? lot : ''}
                     onChange={(e) => handleLotChange(ipo.ticker, e.target.value)}
@@ -128,38 +127,38 @@ export default function IPOTable({ ipoList, orderLots, setOrderLots, selectedPri
                 </td>
                 
                 {/* Total Pesanan */}
-                <td className="py-4 px-4 font-semibold text-white">
+                <td className="py-4 px-4 font-bold font-mono text-[#EDEDED]">
                   {formatRupiah(totalOrder)}
                 </td>
                 
                 {/* Estimasi ARA */}
-                <td className="py-4 px-4 bg-emerald-500/5 border-l border-white/5 text-emerald-400">
-                  <div className="font-bold text-base">
+                <td className="py-4 px-4 border-l border-[#2A2A2A]">
+                  <div className="font-bold font-mono text-[#22C55E]">
                     {formatRupiah(araPrice)}
                   </div>
-                  <div className="text-xs font-semibold text-emerald-500/80">
+                  <div className="text-xs font-bold font-mono text-[#22C55E]/80">
                     +{araPercentage.toFixed(2)}%
                   </div>
                   {lot > 0 && (
-                    <div className="mt-1 text-xs text-gray-400 font-normal">
-                      PnL: <span className="text-emerald-400 font-semibold">+{formatRupiah(araPnL)}</span>
-                      <span className="block text-[10px] text-gray-500">Porto: {formatRupiah(araPortfolio)}</span>
+                    <div className="mt-1 text-[10px] text-[#8A8A8F] font-normal leading-relaxed">
+                      PnL: <span className="text-[#22C55E] font-bold font-mono">+{formatRupiah(araPnL)}</span>
+                      <span className="block text-[9px] text-[#8A8A8F]/70 font-mono">Porto: {formatRupiah(araPortfolio)}</span>
                     </div>
                   )}
                 </td>
                 
                 {/* Estimasi ARB */}
-                <td className="py-4 px-4 bg-rose-500/5 border-l border-white/5 text-rose-400">
-                  <div className="font-bold text-base">
+                <td className="py-4 px-4 border-l border-[#2A2A2A]">
+                  <div className="font-bold font-mono text-[#EF4444]">
                     {formatRupiah(arbPrice)}
                   </div>
-                  <div className="text-xs font-semibold text-rose-500/80">
+                  <div className="text-xs font-bold font-mono text-[#EF4444]/80">
                     {arbPercentage.toFixed(2)}%
                   </div>
                   {lot > 0 && (
-                    <div className="mt-1 text-xs text-gray-400 font-normal">
-                      PnL: <span className="text-rose-400 font-semibold">{formatRupiah(arbPnL)}</span>
-                      <span className="block text-[10px] text-gray-500">Porto: {formatRupiah(arbPortfolio)}</span>
+                    <div className="mt-1 text-[10px] text-[#8A8A8F] font-normal leading-relaxed">
+                      PnL: <span className="text-[#EF4444] font-bold font-mono">{formatRupiah(arbPnL)}</span>
+                      <span className="block text-[9px] text-[#8A8A8F]/70 font-mono">Porto: {formatRupiah(arbPortfolio)}</span>
                     </div>
                   )}
                 </td>

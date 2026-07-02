@@ -48,39 +48,41 @@ function SingleIPOCard({ ipo, lot, setOrderLots, currentPrice, setSelectedPrices
   const arbPnL = arbPortfolio - totalOrder;
 
   return (
-    <div className="glass-panel rounded-xl overflow-hidden shadow-md border border-white/5 transition-all">
+    <div className={`glass-panel rounded-xl overflow-hidden border transition-all ${
+      lot > 0 ? 'border-l-2 border-l-[#B8860B] border-[#2A2A2A]' : 'border-[#2A2A2A]'
+    }`}>
       {/* Bagian Atas Card (Selalu Terlihat) */}
       <div className="p-4 flex flex-col gap-3">
         <div className="flex justify-between items-start">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-white text-lg tracking-wide">{ipo.ticker}</span>
-              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+              <span className="font-bold text-[#EDEDED] text-base tracking-wide">{ipo.ticker}</span>
+              <span className={`px-2 py-0.5 rounded text-[9px] uppercase font-bold tracking-wider border ${
                 ipo.phase.toLowerCase() === 'offering'
-                  ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                  : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                  ? 'bg-[#B8860B]/10 text-[#B8860B] border-[#B8860B]/20'
+                  : 'bg-[#8A8A8F]/10 text-[#8A8A8F] border-[#8A8A8F]/20'
               }`}>
                 {ipo.phase}
               </span>
             </div>
-            <div className="text-xs text-gray-400 max-w-[200px] truncate mt-0.5">{ipo.name}</div>
+            <div className="text-xs text-[#8A8A8F] max-w-[180px] truncate mt-0.5">{ipo.name}</div>
           </div>
           
           <div className="text-right">
-            <span className="block text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Total Pesanan</span>
-            <span className="text-base font-bold text-white">{formatRupiah(totalOrder)}</span>
+            <span className="block text-[9px] text-[#8A8A8F] uppercase tracking-wider font-semibold">Total Pesanan</span>
+            <span className="text-sm font-bold font-mono text-[#EDEDED]">{formatRupiah(totalOrder)}</span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4 items-end mt-1">
           {/* Input Harga / Tampilan Harga */}
           <div>
-            <label className="block text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1">
+            <label className="block text-[9px] text-[#8A8A8F] uppercase tracking-wider font-semibold mb-1">
               Harga Acuan
             </label>
             {ipo.phase.toLowerCase() === 'bookbuilding' && ipo.min_price !== ipo.max_price ? (
               <select
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm focus:outline-none focus:ring-1 focus:ring-violet-500"
+                className="w-full bg-[#0D0D0D]/50 border border-[#2A2A2A] rounded-lg px-2 py-1.5 text-[#EDEDED] text-xs font-mono focus:outline-none focus:ring-1 focus:ring-[#B8860B]"
                 value={currentPrice}
                 onChange={(e) => handlePriceChange(parseInt(e.target.value, 10))}
               >
@@ -89,13 +91,13 @@ function SingleIPOCard({ ipo, lot, setOrderLots, currentPrice, setSelectedPrices
                   (_, i) => ipo.min_price + i * 5
                 ).filter(p => p <= ipo.max_price).concat(ipo.max_price).filter((v, i, self) => self.indexOf(v) === i)
                 .map((priceOption) => (
-                  <option key={priceOption} value={priceOption} className="bg-slate-900 text-white">
+                  <option key={priceOption} value={priceOption} className="bg-[#1A1A1A] text-[#EDEDED] font-mono">
                     Rp {new Intl.NumberFormat("id-ID").format(priceOption)}
                   </option>
                 ))}
               </select>
             ) : (
-              <span className="block text-white font-bold text-base py-1">
+              <span className="block text-[#EDEDED] font-bold font-mono text-sm py-1.5">
                 {formatRupiah(currentPrice)}
               </span>
             )}
@@ -103,12 +105,12 @@ function SingleIPOCard({ ipo, lot, setOrderLots, currentPrice, setSelectedPrices
 
           {/* Input Lot */}
           <div>
-            <label className="block text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1 text-right">
+            <label className="block text-[9px] text-[#8A8A8F] uppercase tracking-wider font-semibold mb-1 text-right">
               Jumlah Lot
             </label>
             <input
               type="text"
-              className="w-full bg-white/5 border border-white/10 rounded-lg py-1.5 px-3 text-white text-center font-bold focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+              className="w-full bg-[#0D0D0D]/50 border border-[#2A2A2A] rounded-lg py-1 px-2.5 text-[#EDEDED] text-center font-bold font-mono text-xs focus:outline-none focus:ring-1 focus:ring-[#B8860B] focus:border-transparent transition-all"
               placeholder="0"
               value={lot > 0 ? lot : ''}
               onChange={(e) => handleLotChange(e.target.value)}
@@ -119,55 +121,55 @@ function SingleIPOCard({ ipo, lot, setOrderLots, currentPrice, setSelectedPrices
         {/* Toggle Button Detail ARA/ARB */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full mt-2 py-2 px-4 rounded-lg bg-white/5 text-xs font-semibold text-violet-300 hover:bg-white/10 border border-violet-500/10 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5"
+          className="w-full mt-2 py-1.5 px-4 rounded-lg bg-white/5 text-xs font-semibold text-[#B8860B] hover:bg-white/[0.02] border border-[#2A2A2A] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
         >
           {isOpen ? 'Sembunyikan Estimasi ARA/ARB' : 'Lihat Estimasi ARA/ARB'}
           <svg
-            className={`w-3.5 h-3.5 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+            className={`w-3 h-3 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
       </div>
 
       {/* Panel Accordion Detail (ARA/ARB) */}
       <div 
-        className={`transition-all duration-300 ease-in-out overflow-hidden bg-black/20 border-t border-white/5 ${
+        className={`transition-all duration-300 ease-in-out overflow-hidden bg-[#0D0D0D]/30 border-t border-[#2A2A2A] ${
           isOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
-        <div className="p-4 grid grid-cols-2 gap-4">
+        <div className="p-4 grid grid-cols-2 gap-3">
           {/* Proyeksi ARA */}
-          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-lg p-3">
-            <span className="block text-[10px] text-emerald-400/80 font-bold uppercase tracking-wider">Estimasi ARA</span>
-            <span className="block text-lg font-bold text-emerald-400 mt-1">{formatRupiah(araPrice)}</span>
-            <span className="inline-block text-xs bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-semibold mt-0.5">
+          <div className="bg-[#22C55E]/5 border border-[#22C55E]/10 rounded-lg p-2.5">
+            <span className="block text-[9px] text-[#22C55E]/85 font-bold uppercase tracking-wider">Estimasi ARA</span>
+            <span className="block text-base font-bold font-mono text-[#22C55E] mt-0.5">{formatRupiah(araPrice)}</span>
+            <span className="inline-block text-[10px] bg-[#22C55E]/10 text-[#22C55E] px-1.5 py-0.2 rounded font-bold mt-1 font-mono">
               +{araPercentage.toFixed(2)}%
             </span>
             
             {lot > 0 && (
-              <div className="mt-3 pt-2 border-t border-emerald-500/10 text-[10px] text-gray-400">
-                <div>PnL: <span className="text-emerald-400 font-bold">+{formatRupiah(araPnL)}</span></div>
-                <div className="mt-0.5">Portofolio: <span className="text-white font-medium">{formatRupiah(araPortfolio)}</span></div>
+              <div className="mt-2.5 pt-2 border-t border-[#22C55E]/10 text-[9px] text-[#8A8A8F] leading-normal font-normal">
+                <div>PnL: <span className="text-[#22C55E] font-bold font-mono">+{formatRupiah(araPnL)}</span></div>
+                <div className="mt-0.5">Porto: <span className="text-[#EDEDED] font-mono">{formatRupiah(araPortfolio)}</span></div>
               </div>
             )}
           </div>
 
           {/* Proyeksi ARB */}
-          <div className="bg-rose-500/5 border border-rose-500/10 rounded-lg p-3">
-            <span className="block text-[10px] text-rose-400/80 font-bold uppercase tracking-wider">Estimasi ARB</span>
-            <span className="block text-lg font-bold text-rose-400 mt-1">{formatRupiah(arbPrice)}</span>
-            <span className="inline-block text-xs bg-rose-500/10 text-rose-400 px-1.5 py-0.5 rounded font-semibold mt-0.5">
+          <div className="bg-[#EF4444]/5 border border-[#EF4444]/10 rounded-lg p-2.5">
+            <span className="block text-[9px] text-[#EF4444]/85 font-bold uppercase tracking-wider">Estimasi ARB</span>
+            <span className="block text-base font-bold font-mono text-[#EF4444] mt-0.5">{formatRupiah(arbPrice)}</span>
+            <span className="inline-block text-[10px] bg-[#EF4444]/10 text-[#EF4444] px-1.5 py-0.2 rounded font-bold mt-1 font-mono">
               {arbPercentage.toFixed(2)}%
             </span>
             
             {lot > 0 && (
-              <div className="mt-3 pt-2 border-t border-rose-500/10 text-[10px] text-gray-400">
-                <div>PnL: <span className="text-rose-400 font-bold">{formatRupiah(arbPnL)}</span></div>
-                <div className="mt-0.5">Portofolio: <span className="text-white font-medium">{formatRupiah(arbPortfolio)}</span></div>
+              <div className="mt-2.5 pt-2 border-t border-[#EF4444]/10 text-[9px] text-[#8A8A8F] leading-normal font-normal">
+                <div>PnL: <span className="text-[#EF4444] font-bold font-mono">{formatRupiah(arbPnL)}</span></div>
+                <div className="mt-0.5">Porto: <span className="text-[#EDEDED] font-mono">{formatRupiah(arbPortfolio)}</span></div>
               </div>
             )}
           </div>

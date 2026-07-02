@@ -172,23 +172,23 @@ export default function App() {
       
       {/* Header Utama */}
       <header className="pt-8 pb-4 text-center max-w-7xl mx-auto px-4">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-teal-200 bg-clip-text text-transparent drop-shadow-sm">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-[#EDEDED] drop-shadow-sm">
           Kalkulator & Simulator ARA/ARB IPO
         </h1>
-        <p className="text-sm md:text-base text-gray-400 mt-2 max-w-xl mx-auto">
+        <p className="text-sm md:text-base text-[#8A8A8F] mt-2 max-w-xl mx-auto">
           Maksimalkan money management pesanan e-IPO Anda. Hitung potensi profit dan batasi risiko hari pertama listing secara otomatis sesuai regulasi IDX.
         </p>
       </header>
 
       {/* Tab Navigation */}
       <div className="max-w-7xl mx-auto px-4 mb-6 flex justify-center">
-        <div className="flex bg-white/5 border border-white/10 rounded-xl p-1 shadow-inner backdrop-blur-sm">
+        <div className="flex bg-white/5 border border-[#2A2A2A] rounded-xl p-1 shadow-inner backdrop-blur-sm">
           <button
             onClick={() => setActiveTab('daily')}
             className={`py-2.5 px-5 sm:px-8 rounded-lg text-xs md:text-sm font-bold tracking-wide transition-all cursor-pointer active:scale-95 whitespace-nowrap ${
               activeTab === 'daily'
-                ? 'bg-violet-600 text-white shadow-md shadow-violet-900/30'
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                ? 'bg-[#B8860B] text-slate-950 shadow-md shadow-amber-950/20'
+                : 'text-[#8A8A8F] hover:text-[#EDEDED] hover:bg-white/5'
             }`}
           >
             <span>Kalkulator Harian</span>
@@ -197,8 +197,8 @@ export default function App() {
             onClick={() => setActiveTab('sequential')}
             className={`py-2.5 px-5 sm:px-8 rounded-lg text-xs md:text-sm font-bold tracking-wide transition-all cursor-pointer active:scale-95 whitespace-nowrap ${
               activeTab === 'sequential'
-                ? 'bg-violet-600 text-white shadow-md shadow-violet-900/30'
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                ? 'bg-[#B8860B] text-slate-950 shadow-md shadow-amber-950/20'
+                : 'text-[#8A8A8F] hover:text-[#EDEDED] hover:bg-white/5'
             }`}
           >
             <span>Simulasi ARA</span>
@@ -222,34 +222,34 @@ export default function App() {
             {hasActiveOrder && (
               <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade-in">
                 {/* Ringkasan Profit ARA */}
-                <div className="glass-panel rounded-xl p-5 border-l-4 border-emerald-500 shadow-md">
-                  <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Potensi Profit Maksimal (Hari ke-1 ARA)</div>
+                <div className="glass-panel rounded-xl p-5 border-l-2 border-[#22C55E] shadow-sm">
+                  <div className="text-xs font-semibold text-[#8A8A8F] uppercase tracking-wider">Potensi Profit Maksimal (Hari ke-1 ARA)</div>
                   <div className="flex items-baseline gap-2 mt-2">
-                    <span className="text-2xl md:text-3xl font-extrabold text-emerald-400">
+                    <span className="text-2xl md:text-3xl font-bold font-mono text-[#22C55E]">
                       +{formatRupiah(totalAraPnL)}
                     </span>
-                    <span className="text-sm font-bold bg-emerald-500/15 text-emerald-400 px-2 py-0.5 rounded">
+                    <span className="text-xs font-bold font-mono bg-[#22C55E]/10 text-[#22C55E] px-2 py-0.5 rounded">
                       +{totalAraPnLPercentage.toFixed(2)}%
                     </span>
                   </div>
-                  <p className="text-xs text-gray-400 mt-2">
-                    Proyeksi nilai total portofolio Anda akan menjadi <strong className="text-white">{formatRupiah(totalOrder + totalAraPnL)}</strong> jika seluruh saham yang dipesan mengalami Auto Rejection Atas di hari pertama.
+                  <p className="text-xs text-[#8A8A8F] mt-2 leading-relaxed">
+                    Proyeksi nilai total portofolio Anda akan menjadi <strong className="text-[#EDEDED] font-mono">{formatRupiah(totalOrder + totalAraPnL)}</strong> jika seluruh saham yang dipesan mengalami Auto Rejection Atas di hari pertama.
                   </p>
                 </div>
 
                 {/* Ringkasan Risiko ARB */}
-                <div className="glass-panel rounded-xl p-5 border-l-4 border-rose-500 shadow-md">
-                  <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Potensi Kerugian Maksimal (Hari ke-1 ARB)</div>
+                <div className="glass-panel rounded-xl p-5 border-l-2 border-[#EF4444] shadow-sm">
+                  <div className="text-xs font-semibold text-[#8A8A8F] uppercase tracking-wider">Potensi Kerugian Maksimal (Hari ke-1 ARB)</div>
                   <div className="flex items-baseline gap-2 mt-2">
-                    <span className="text-2xl md:text-3xl font-extrabold text-rose-400">
+                    <span className="text-2xl md:text-3xl font-bold font-mono text-[#EF4444]">
                       {formatRupiah(totalArbPnL)}
                     </span>
-                    <span className="text-sm font-bold bg-rose-500/15 text-rose-400 px-2 py-0.5 rounded">
+                    <span className="text-xs font-bold font-mono bg-[#EF4444]/10 text-[#EF4444] px-2 py-0.5 rounded">
                       {totalArbPnLPercentage.toFixed(2)}%
                     </span>
                   </div>
-                  <p className="text-xs text-gray-400 mt-2">
-                    Proyeksi nilai total portofolio Anda akan menjadi <strong className="text-white">{formatRupiah(totalOrder + totalArbPnL)}</strong> jika seluruh saham yang dipesan mengalami Auto Rejection Bawah di hari pertama.
+                  <p className="text-xs text-[#8A8A8F] mt-2 leading-relaxed">
+                    Proyeksi nilai total portofolio Anda akan menjadi <strong className="text-[#EDEDED] font-mono">{formatRupiah(totalOrder + totalArbPnL)}</strong> jika seluruh saham yang dipesan mengalami Auto Rejection Bawah di hari pertama.
                   </p>
                 </div>
 
@@ -326,25 +326,25 @@ export default function App() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
           {/* Backdrop Blur */}
           <div 
-            className="absolute inset-0 bg-black/65 backdrop-blur-md transition-opacity"
+            className="absolute inset-0 bg-black/75 backdrop-blur-md transition-opacity"
             onClick={() => setShowResetModal(false)}
           />
           
           {/* Modal Container */}
-          <div className="relative glass-panel max-w-xs w-full rounded-2xl border border-white/10 p-6 shadow-2xl">
+          <div className="relative glass-panel max-w-xs w-full rounded-2xl border border-[#2A2A2A] p-6 shadow-2xl">
             <div className="flex flex-col items-center text-center">
-              {/* Warning Icon */}
-              <div className="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               {/* Warning Icon */}
+              <div className="w-12 h-12 rounded-xl bg-[#EF4444]/10 border border-[#EF4444]/20 flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-[#EF4444]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>
 
               {/* Title & Description */}
-              <h3 className="text-lg font-bold text-white tracking-wide">
+              <h3 className="text-lg font-bold text-[#EDEDED] tracking-wide">
                 Reset Kalkulator?
               </h3>
-              <p className="text-xs text-gray-400 mt-2 leading-relaxed">
+              <p className="text-xs text-[#8A8A8F] mt-2 leading-relaxed">
                 Apakah Anda yakin ingin mengosongkan seluruh jumlah lot pesanan saham IPO Anda?
               </p>
 
@@ -352,13 +352,13 @@ export default function App() {
               <div className="flex w-full gap-3 mt-6">
                 <button
                   onClick={() => setShowResetModal(false)}
-                  className="flex-1 py-2 rounded-xl border border-white/10 text-xs font-semibold text-gray-300 hover:bg-white/5 active:scale-95 transition-all cursor-pointer"
+                  className="flex-1 py-2.5 rounded-xl border border-[#2A2A2A] text-xs font-semibold text-[#8A8A8F] hover:bg-white/5 active:scale-95 transition-all cursor-pointer"
                 >
                   Batal
                 </button>
                 <button
                   onClick={confirmReset}
-                  className="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-900/20 active:scale-95 transition-all cursor-pointer"
+                  className="flex-1 py-2.5 rounded-xl bg-[#EF4444] hover:bg-[#EF4444]/90 text-xs font-semibold text-white active:scale-95 transition-all cursor-pointer"
                 >
                   Ya, Reset
                 </button>

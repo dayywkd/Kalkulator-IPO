@@ -1,34 +1,36 @@
-@import "tailwindcss";
-
 @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
 
 @theme {
   --font-sans: 'Cabinet Grotesk', system-ui, -apple-system, sans-serif;
-  --color-dark-bg: #090b11;
-  --color-dark-card: rgba(17, 22, 34, 0.65);
-  --color-dark-border: rgba(255, 255, 255, 0.08);
-  --color-accent-purple: #8b5cf6;
-  --color-accent-green: #10b981;
-  --color-accent-red: #f43f5e;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  --color-bg-primary: #0D0D0D;
+  --color-bg-surface: #1A1A1A;
+  --color-border-custom: #2A2A2A;
+  --color-text-primary: #EDEDED;
+  --color-text-secondary: #8A8A8F;
+  --color-accent-gold: #B8860B;
+  --color-positive-ara: #22C55E;
+  --color-negative-arb: #EF4444;
 }
 
 body {
-  background-color: var(--color-dark-bg);
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.07) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
-  color: #f3f4f6;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
   min-height: 100vh;
   font-family: var(--font-sans);
+  background-image: radial-gradient(at 50% 0%, rgba(184, 134, 11, 0.03) 0px, transparent 50%);
 }
 
 /* Glassmorphism custom styles */
 .glass-panel {
-  background: var(--color-dark-card);
+  background-color: rgba(26, 26, 26, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-dark-border);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid var(--color-border-custom);
 }
 
 .glass-panel-hover {
@@ -37,8 +39,8 @@ body {
 
 .glass-panel-hover:hover {
   transform: translateY(-2px);
-  border-color: rgba(139, 92, 246, 0.25);
-  box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.15);
+  border-color: rgba(184, 134, 11, 0.25);
+  background-color: rgba(34, 34, 34, 0.65);
 }
 
 /* Custom scrollbar */
@@ -47,10 +49,10 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #090b11;
+  background: var(--color-bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f2937;
+  background: #2A2A2A;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
