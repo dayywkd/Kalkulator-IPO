@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function Tooltip({ content, position = 'top', align = 'center' }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const tooltipRef = useRef(null);
   const isBottom = position === 'bottom';
   
   // Klasifikasi posisi horizontal berdasarkan alignment
@@ -15,23 +17,52 @@ export default function Tooltip({ content, position = 'top', align = 'center' })
     arrowAlignClass = 'left-1.5'; // sejajar dengan dot penanya di kiri
   }
 
+  // Menutup tooltip saat mengetuk (tap/click) di luar area tooltip
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside); // Support event sentuh layar HP
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <span className="group relative inline-flex ml-1.5 cursor-help select-none">
+    <span 
+      ref={tooltipRef}
+      className="relative inline-flex ml-1.5 cursor-help select-none"
+      onClick={(e) => {
+        e.stopPropagation(); // Mencegah pemicu klik baris/accordion di belakangnya
+        setIsOpen(!isOpen);
+      }}
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
       <span className="text-gray-400 hover:text-white transition-colors text-[9px] bg-white/5 hover:bg-white/10 border border-white/10 rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">
         ?
       </span>
+      
       {/* Tooltip Overlay */}
-      <span className={`absolute hidden group-hover:block w-56 bg-slate-950/95 border border-white/10 text-[11px] leading-relaxed text-gray-300 rounded-lg p-2.5 shadow-xl backdrop-blur-md z-[100] text-center font-normal normal-case tracking-normal ${alignClass} ${
-        isBottom ? 'top-full mt-2' : 'bottom-full mb-2'
-      }`}>
-        {content}
-        {/* Arrow pointer */}
-        <span className={`absolute border-[5px] border-transparent ${arrowAlignClass} ${
-          isBottom 
-            ? 'bottom-full border-b-slate-950/95' 
-            : 'top-full border-t-slate-950/95'
-        }`} />
-      </span>
+      {isOpen && (
+        <span className={`absolute w-56 bg-slate-950/95 border border-white/10 text-[11px] leading-relaxed text-gray-300 rounded-lg p-2.5 shadow-xl backdrop-blur-md z-[100] text-center font-normal normal-case tracking-normal ${alignClass} ${
+          isBottom ? 'top-full mt-2' : 'bottom-full mb-2'
+        }`}>
+          {content}
+          {/* Arrow pointer */}
+          <span className={`absolute border-[5px] border-transparent ${arrowAlignClass} ${
+            isBottom 
+              ? 'bottom-full border-b-slate-950/95' 
+              : 'top-full border-t-slate-950/95'
+          }`} />
+        </span>
+      )}
     </span>
   );
 }
