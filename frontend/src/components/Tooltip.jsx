@@ -45,22 +45,26 @@ export default function Tooltip({ content, position = 'top', align = 'center' })
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <span className="text-gray-400 hover:text-white transition-colors text-[9px] bg-white/5 hover:bg-white/10 border border-white/10 rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">
+      <span className="text-text-secondary hover:text-text-primary transition-colors text-[9px] bg-bg-surface border border-border-custom rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">
         ?
       </span>
       
       {/* Tooltip Overlay */}
       {isOpen && (
-        <span className={`absolute w-56 bg-slate-950/95 border border-white/10 text-[11px] leading-relaxed text-gray-300 rounded-lg p-2.5 shadow-xl backdrop-blur-md z-[100] text-center font-normal normal-case tracking-normal ${alignClass} ${
+        <span className={`absolute w-56 bg-bg-surface border border-border-custom text-[11px] leading-relaxed text-text-secondary rounded-lg p-2.5 shadow-xl backdrop-blur-md z-[100] text-center font-normal normal-case tracking-normal ${alignClass} ${
           isBottom ? 'top-full mt-2' : 'bottom-full mb-2'
         }`}>
           {content}
           {/* Arrow pointer */}
-          <span className={`absolute border-[5px] border-transparent ${arrowAlignClass} ${
-            isBottom 
-              ? 'bottom-full border-b-slate-950/95' 
-              : 'top-full border-t-slate-950/95'
-          }`} />
+          <span 
+            className={`absolute border-[5px] border-transparent ${arrowAlignClass} ${
+              isBottom ? 'bottom-full' : 'top-full'
+            }`} 
+            style={{
+              borderBottomColor: isBottom ? 'var(--bg-surface)' : 'transparent',
+              borderTopColor: !isBottom ? 'var(--bg-surface)' : 'transparent'
+            }}
+          />
         </span>
       )}
     </span>
