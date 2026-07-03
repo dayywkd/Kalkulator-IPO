@@ -14,7 +14,8 @@ const FALLBACK_IPO_LIST = [
     min_price: 900,
     max_price: 900,
     price: 900,
-    phase: "Offering"
+    phase: "Offering",
+    listing_date: "2026-07-07"
   },
   {
     ticker: "JECX",
@@ -23,7 +24,8 @@ const FALLBACK_IPO_LIST = [
     min_price: 1250,
     max_price: 1250,
     price: 1250,
-    phase: "Offering"
+    phase: "Offering",
+    listing_date: "2026-07-07"
   },
   {
     ticker: "PRDL",
@@ -32,7 +34,8 @@ const FALLBACK_IPO_LIST = [
     min_price: 120,
     max_price: 120,
     price: 120,
-    phase: "Offering"
+    phase: "Offering",
+    listing_date: "2026-07-09"
   },
   {
     ticker: "BACH",
@@ -41,7 +44,8 @@ const FALLBACK_IPO_LIST = [
     min_price: 442,
     max_price: 442,
     price: 442,
-    phase: "Offering"
+    phase: "Offering",
+    listing_date: "2026-07-08"
   },
   {
     ticker: "EMMI",
@@ -50,7 +54,8 @@ const FALLBACK_IPO_LIST = [
     min_price: 470,
     max_price: 470,
     price: 470,
-    phase: "Offering"
+    phase: "Offering",
+    listing_date: "2026-07-08"
   },
   {
     ticker: "RANS",
@@ -59,7 +64,8 @@ const FALLBACK_IPO_LIST = [
     min_price: 170,
     max_price: 170,
     price: 170,
-    phase: "Offering"
+    phase: "Offering",
+    listing_date: "2026-07-10"
   }
 ];
 
